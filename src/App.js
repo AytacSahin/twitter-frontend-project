@@ -1,12 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
 import Post from './Post/Post';
+import MenuLinks from './Components/MenuLinks';
+import Explorer from './Components/Explorer';
 
 function App() {
   return (
 
-    <div className="App">
-      <Post />
+    <div className='flex flex-row justify-center bg-blue-300'>
+      <MenuLinks />
+      <Routes>
+        <Route exact path="/home" element={<Post />} />
+      </Routes>
+      <Explorer />
     </div>
   );
 }

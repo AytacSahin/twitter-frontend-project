@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { ReactDOM } from 'react'
 
 const Post = () => {
 
@@ -30,7 +29,7 @@ const Post = () => {
         return <div>Loading...</div>
     } else {
         return (
-            <ul>
+            <ul className='bg-yellow-500 w-[40%]'>
                 {postList.map(post => (
                     <li key={post.id}>
                         {post.text}
