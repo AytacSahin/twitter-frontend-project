@@ -6,7 +6,7 @@ import Explorer from './Components/Explorer';
 function App() {
   return (
 
-    <div className='flex flex-row justify-center bg-blue-300'>
+    <div className='flex flex-row justify-center bg-blue-300 h-screen'>
       <MenuLinks />
       <Routes>
         <Route exact path="/home" element={<Post />} />
