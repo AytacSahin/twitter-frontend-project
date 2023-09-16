@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import CreatePost from './Post/CreatePost'
+import Modal from 'react-modal'
 
 const MenuLinks = () => {
+
+  const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
+
+  const handlePostButton = () => {
+    setIsMenuModalOpen(true);
+  }
+
+  const handleModalClose = () => {
+    setIsMenuModalOpen(false);
+  }
+
   return (
     <div className='bg-white w-[20rem] text-xl'>
 
@@ -69,7 +82,7 @@ const MenuLinks = () => {
           </li>
 
           <li className='mb-4 hover:bg-slate-200 rounded-full h-12 flex flex-row items-center'>
-            <Link to="/home" className='flex'><svg className='pl-2 mr-3' height="1.6em" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <Link to="/home" className='flex'><svg className='pl-2 mr-3' height="1.6em" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               More
             </Link>
           </li>
@@ -77,21 +90,34 @@ const MenuLinks = () => {
         </ul>
       </nav >
 
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-72">
+      <button onClick={() => handlePostButton()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-72">
         Post
       </button>
 
-      <div class="flex-shrink-0 flex hover:bg-blue-00 rounded-full p-4 mt-4 mr-2">
-        <a href="#" class="flex-shrink-0 group block">
-          <div class="flex items-center">
+      <Modal
+        isOpen={isMenuModalOpen}
+        onRequestClose={handleModalClose}
+        contentLabel="Tweet'ler resimlerle güzel!"
+        className="fixed inset-0 z-50"
+      >
+        <div className="bg-black bg-opacity-50 h-screen w-screen flex items-center justify-center">
+          <div className="bg-white w-1/2 p-4 rounded-lg">
+            <CreatePost />
+          </div>
+        </div>
+      </Modal>
+
+      <div className="flex-shrink-0 flex hover:bg-blue-00 rounded-full p-4 mt-4 mr-2">
+        <a href="#" className="flex-shrink-0 group block">
+          <div className="flex items-center">
             <div>
-              <img class="inline-block h-10 w-10 rounded-full" src="https://aytac-sahin.vercel.app/static/media/headerImage.4719c4dbc590028a0a9f.png" alt="" />
+              <img className="inline-block h-10 w-10 rounded-full" src="https://aytac-sahin.vercel.app/static/media/headerImage.4719c4dbc590028a0a9f.png" alt="" />
             </div>
-            <div class="ml-3">
-              <p class="text-base leading-6 font-medium text-black">
+            <div className="ml-3">
+              <p className="text-base leading-6 font-medium text-black">
                 Aytac Sahin
               </p>
-              <p class="text-sm leading-5 font-medium text-black group-hover:text-gray-300 transition ease-in-out duration-150">
+              <p className="text-sm leading-5 font-medium text-black group-hover:text-gray-300 transition ease-in-out duration-150">
                 @aytacsah
               </p>
             </div>

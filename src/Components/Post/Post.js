@@ -9,8 +9,10 @@ const Post = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState();
 
-    // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
+    // TODO: LOGIN'DEN AL:
+    const userId = 2;
 
+    // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     useEffect(() => {
         axios
             .get("/tweet")
@@ -21,7 +23,6 @@ const Post = () => {
             .catch((error) => {
                 setIsLoaded(true);
                 setError(error);
-                console.log(error);
             });
     }, []);
 

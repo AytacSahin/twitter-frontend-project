@@ -1,5 +1,5 @@
 
-const DateCalculator = (givenDate) => {
+const dateCalculator = (givenDate) => {
 
     const date = new Date(givenDate);
     const day = date.getDate();
@@ -10,4 +10,4 @@ const DateCalculator = (givenDate) => {
     return formattedDate;
 }
 
-export default DateCalculator
+export default dateCalculator
