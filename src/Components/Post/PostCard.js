@@ -12,7 +12,7 @@ const PostCard = ({ postList, refreshData }) => {
             {postList.map(post => (
                 <li key={post.id} className="border-l-2 border-r-2 border-t-2 border-gray-300 border-opacity-40 pr-10">
                     <div className="flex flex-shrink-0 p-4 pb-0">
-                        <a href="#" className="flex-shrink-0 group block">
+                        <a className="flex-shrink-0 group block">
                             <div className="flex items-center">
                                 <div>
                                     <img className="inline-block h-10 w-10 rounded-full" src={post.profilePicture} alt="" />

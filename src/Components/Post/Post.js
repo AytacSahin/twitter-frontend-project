@@ -10,7 +10,7 @@ const Post = () => {
     const [postList, setPostList] = useState();
 
     // TODO: LOGIN'DEN AL:
-    const userId = 3;
+    const userId = 1;
 
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
@@ -37,9 +37,9 @@ const Post = () => {
     } else {
         return (
             <div >
-                <ul className='w-[40rem]'>
-                    <CreatePost refreshData={refreshData} />
-                    <PostCard postList={postList} refreshData={refreshData} />
+                <ul className='w-[42rem]'>
+                    <CreatePost />
+                    <PostCard refreshData={refreshData} postList={postList} />
                 </ul>
             </div>
         )

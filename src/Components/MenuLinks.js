@@ -16,7 +16,7 @@ const MenuLinks = () => {
   }
 
   return (
-    <div className='bg-white w-[20rem] text-xl'>
+    <div className='bg-white w-[20rem] text-xl pt-6'>
 
       <nav>
         <ul>
@@ -108,7 +108,7 @@ const MenuLinks = () => {
       </Modal>
 
       <div className="flex-shrink-0 flex hover:bg-blue-00 rounded-full p-4 mt-4 mr-2">
-        <a href="#" className="flex-shrink-0 group block">
+        <a className="flex-shrink-0 group block">
           <div className="flex items-center">
             <div>
               <img className="inline-block h-10 w-10 rounded-full" src="https://aytac-sahin.vercel.app/static/media/headerImage.4719c4dbc590028a0a9f.png" alt="" />
