@@ -1,14 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const PostFooterBar = ({ tweetId, likeCount }) => {
+const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
 
     const [likesArr, setLikesArr] = useState([]);
 
     // TODO: LOGIN'DEN AL:
-    const userId = 2;
+    const userId = 4;
 
-    useEffect(() => {
+    const getLikesArr = () => {
         axios
             .get(`/like?userId=${userId}`)
             .then((res) => {
@@ -17,17 +17,47 @@ const PostFooterBar = ({ tweetId, likeCount }) => {
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    useEffect(() => {
+        getLikesArr();
     }, []);
 
-
     const isLike = (id) => {
-        let likesArrCopy = [...likesArr];
-        let foundedLike = likesArrCopy.find(like => like.userId == userId && like.tweetId == id);
+        let foundedLike = likesArr.find(like => like.userId == userId && like.tweetId == id);
         return foundedLike ? true : false;
     }
 
-    const handleLike = () => {
+    const findLikeId = (userId, tweetId) => {
+        let foundedLikeId = likesArr.find(like => like.userId == userId && like.tweetId == tweetId);
+        return foundedLikeId.id;
+    }
 
+    const handleLike = (tweetId) => {
+        if (!isLike(tweetId)) {
+            axios
+                .post("/like", {
+                    userId: userId,
+                    tweetId: tweetId
+                })
+                .then((res) => {
+                    refreshData();
+                    getLikesArr();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            axios
+                .delete(`/like/${findLikeId(userId, tweetId)}`)
+                .then((res) => {
+                    refreshData();
+                    getLikesArr();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     }
 
     return (
@@ -49,7 +79,7 @@ const PostFooterBar = ({ tweetId, likeCount }) => {
                         <div className="py-2 m-2 flex items-center">
                             <a className={`w-12 mt-1 group flex items-center px-3 py-2 text-base leading-6 font-medium rounded-full hover:bg-blue-800 hover:text-blue-300 
                             ${isLike(tweetId) ? 'text-[#F91880]' : 'text-gray-500'}`}
-                                onClick={() => handleLike(likesArr)}>
+                                onClick={() => handleLike(tweetId)}>
                                 <svg className="h-7 w-6" fill={isLike(tweetId) ? '#F91880' : 'none'} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                             </a>
                             {likeCount}

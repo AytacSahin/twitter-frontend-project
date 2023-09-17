@@ -4,7 +4,7 @@ import PostFooterBar from './PostFooterBar';
 import determineLinkType from '../../Helpers/IsVideoOrImage';
 
 
-const PostCard = ({ postList }) => {
+const PostCard = ({ postList, refreshData }) => {
 
     return (
         <div>
@@ -53,7 +53,7 @@ const PostCard = ({ postList }) => {
                                 )}
                             </div>
                         }
-                        <PostFooterBar tweetId={post.id} likeCount={post.likeCount} />
+                        <PostFooterBar refreshData={refreshData} tweetId={post.id} likeCount={post.likeCount} />
                     </div>
                 </li>
             ))}

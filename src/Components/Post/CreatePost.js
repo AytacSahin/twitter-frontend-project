@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import CreateImageUrlPost from './CreateImageUrlPost';
 import Modal from 'react-modal';
 
-const CreatePost = () => {
+const CreatePost = ({ refreshData }) => {
 
     const [newPost, setNewPost] = useState();
     const [imageLink, setImageLink] = useState("");
@@ -17,7 +17,7 @@ const CreatePost = () => {
             imageUrl: imageLink
         })
             .then(function (response) {
-                window.location.reload();
+                refreshData();
             })
             .catch(function (error) {
                 console.log(error);

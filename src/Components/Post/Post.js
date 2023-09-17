@@ -10,10 +10,10 @@ const Post = () => {
     const [postList, setPostList] = useState();
 
     // TODO: LOGIN'DEN AL:
-    const userId = 2;
+    const userId = 3;
 
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
-    useEffect(() => {
+    const refreshData = () => {
         axios
             .get("/tweet")
             .then((res) => {
@@ -24,6 +24,10 @@ const Post = () => {
                 setIsLoaded(true);
                 setError(error);
             });
+    };
+
+    useEffect(() => {
+        refreshData();
     }, []);
 
     if (error) {
@@ -34,8 +38,8 @@ const Post = () => {
         return (
             <div >
                 <ul className='w-[40rem]'>
-                    <CreatePost />
-                    <PostCard postList={postList} />
+                    <CreatePost refreshData={refreshData} />
+                    <PostCard postList={postList} refreshData={refreshData} />
                 </ul>
             </div>
         )
