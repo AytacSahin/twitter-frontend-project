@@ -1,22 +1,30 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
-import CreatePost from './CreatePost';
-import PostCard from './PostCard';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import UserDetails from './UserDetails';
+import PostCard from '../Post/PostCard'
 import Loading from '../Pages/Loading';
 
-const Post = () => {
+const UserProfile = () => {
+
+    const { id } = useParams();
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [postList, setPostList] = useState();
+    const [postList, setPostList] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
 
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
-        axios
-            .get("/tweet")
-            .then((res) => {
+        Promise.all([
+            axios.get(`/tweet?userId=${id}`),
+            axios.get(`/user/${id}`)
+        ])
+            .then((responses) => {
+                const [postResponse, userResponse] = responses;
                 setIsLoaded(true);
-                setPostList(res.data);
+                setPostList(postResponse.data);
+                setUserInfo(userResponse.data.length < 1 ? [userResponse.data] : userResponse.data);
             })
             .catch((error) => {
                 setIsLoaded(true);
@@ -36,7 +44,7 @@ const Post = () => {
         return (
             <div >
                 <ul className='w-[42rem]'>
-                    <CreatePost />
+                    <UserDetails userInfo={userInfo} />
                     <PostCard refreshData={refreshData} postList={postList} />
                 </ul>
             </div>
@@ -44,4 +52,4 @@ const Post = () => {
     }
 };
 
-export default Post;
+export default UserProfile

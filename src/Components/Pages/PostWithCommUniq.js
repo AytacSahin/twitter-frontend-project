@@ -1,22 +1,25 @@
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import PostCard from '../Post/PostCard';
+import Comment from '../Comment/Comment';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
-import CreatePost from './CreatePost';
-import PostCard from './PostCard';
-import Loading from '../Pages/Loading';
+import Loading from './Loading';
 
-const Post = () => {
+const PostWithCommUniq = () => {
+    const { id } = useParams();
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [postList, setPostList] = useState();
+    const [postList, setPostList] = useState([]);
 
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
+        console.log(id);
         axios
-            .get("/tweet")
+            .get(`/tweet/${id}`)
             .then((res) => {
                 setIsLoaded(true);
-                setPostList(res.data);
+                setPostList([res.data]);
             })
             .catch((error) => {
                 setIsLoaded(true);
@@ -36,12 +39,12 @@ const Post = () => {
         return (
             <div >
                 <ul className='w-[42rem]'>
-                    <CreatePost />
                     <PostCard refreshData={refreshData} postList={postList} />
+                    <Comment tweetId={id} />
                 </ul>
             </div>
         )
     }
 };
 
-export default Post;
+export default PostWithCommUniq

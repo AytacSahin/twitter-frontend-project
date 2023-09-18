@@ -1,5 +1,6 @@
 
 const dateCalculator = (givenDate) => {
+    console.log(givenDate);
 
     const date = new Date(givenDate);
     const day = date.getDate();

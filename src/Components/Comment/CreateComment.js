@@ -1,21 +1,20 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import CreateImageUrlPost from './CreateImageUrlPost';
+import CreateImageUrlPost from '../Post/CreateImageUrlPost';
 import Modal from 'react-modal';
 
-const CreatePost = ({ refreshData }) => {
-
-    const [newPost, setNewPost] = useState();
+const CreateComment = ({refreshData, tweetId}) => {
+    const [newComment, setNewComment] = useState();
     const [imageLink, setImageLink] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const userIdDegistir = 1;
 
-
-    const sendTweet = () => {
-        axios.post('/tweet', {
-            text: newPost,
+    const sendComment = () => {
+        axios.post('/comment', {
+            text: newComment,
             userId: userIdDegistir,
+            tweetId: tweetId,
             imageUrl: imageLink
         })
             .then(function (response) {
@@ -40,7 +39,8 @@ const CreatePost = ({ refreshData }) => {
     }
 
     return (
-        <div className='border-2 border-gray-200 border-opacity-50 pt-4 '>
+
+        <div className='border-2 border-gray-200 border-opacity-50 pt-4 mt-2 bg-gray-100'>
 
             <div className="flex ">
                 <div className="m-2 w-10 py-1">
@@ -48,9 +48,9 @@ const CreatePost = ({ refreshData }) => {
                 </div>
                 <div className="flex-1 px-2 pt-2 mt-2">
                     <textarea
-                        value={newPost}
-                        onChange={(e) => setNewPost(e.target.value)}
-                        className=" bg-transparent text-gray-400 font-medium text-lg w-full" rows="2" cols="50" placeholder="What is happening?!"></textarea>
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        className=" bg-transparent text-gray-400 font-medium text-lg w-full" rows="2" cols="50" placeholder="Post your reply"></textarea>
                 </div>
             </div>
 
@@ -98,8 +98,8 @@ const CreatePost = ({ refreshData }) => {
                 </div>
 
                 <div className="flex-1">
-                    <button onClick={() => sendTweet()} className="bg-blue-400 mt-5 hover:bg-blue-600 text-white font-bold py-2 px-8 rounded-full mr-8 float-right">
-                        Post
+                    <button onClick={() => sendComment()} className="bg-blue-400 mt-5 hover:bg-blue-600 text-white font-bold py-2 px-8 rounded-full mr-8 float-right">
+                        Reply
                     </button>
                 </div>
             </div>
@@ -107,4 +107,4 @@ const CreatePost = ({ refreshData }) => {
     )
 }
 
-export default CreatePost
+export default CreateComment

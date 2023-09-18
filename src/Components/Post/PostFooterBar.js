@@ -6,11 +6,11 @@ const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
     const [likesArr, setLikesArr] = useState([]);
 
     // TODO: LOGIN'DEN AL:
-    const userId = 4;
+    const userIdDegistir = 1;
 
     const getLikesArr = () => {
         axios
-            .get(`/like?userId=${userId}`)
+            .get(`/like?userId=${userIdDegistir}`)
             .then((res) => {
                 setLikesArr(res.data);
             })
@@ -24,12 +24,12 @@ const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
     }, []);
 
     const isLike = (id) => {
-        let foundedLike = likesArr.find(like => like.userId == userId && like.tweetId == id);
+        let foundedLike = likesArr.find(like => like.userId === userIdDegistir && like.tweetId === id);
         return foundedLike ? true : false;
     }
 
     const findLikeId = (userId, tweetId) => {
-        let foundedLikeId = likesArr.find(like => like.userId == userId && like.tweetId == tweetId);
+        let foundedLikeId = likesArr.find(like => like.userId === userIdDegistir && like.tweetId === tweetId);
         return foundedLikeId.id;
     }
 
@@ -37,7 +37,7 @@ const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
         if (!isLike(tweetId)) {
             axios
                 .post("/like", {
-                    userId: userId,
+                    userId: userIdDegistir,
                     tweetId: tweetId
                 })
                 .then((res) => {
@@ -49,7 +49,7 @@ const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
                 });
         } else {
             axios
-                .delete(`/like/${findLikeId(userId, tweetId)}`)
+                .delete(`/like/${findLikeId(userIdDegistir, tweetId)}`)
                 .then((res) => {
                     refreshData();
                     getLikesArr();

@@ -1,19 +1,19 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
-import CreatePost from './CreatePost';
-import PostCard from './PostCard';
+import React, { useEffect, useState } from 'react'
+import PostCard from '../Post/PostCard';
+import CreateComment from './CreateComment';
 import Loading from '../Pages/Loading';
 
-const Post = () => {
-
+const Comment = ({ tweetId }) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState();
 
+
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
         axios
-            .get("/tweet")
+            .get(`/comment?tweetId=${tweetId}`)
             .then((res) => {
                 setIsLoaded(true);
                 setPostList(res.data);
@@ -36,7 +36,7 @@ const Post = () => {
         return (
             <div >
                 <ul className='w-[42rem]'>
-                    <CreatePost />
+                    <CreateComment refreshData={refreshData} tweetId={tweetId} />
                     <PostCard refreshData={refreshData} postList={postList} />
                 </ul>
             </div>
@@ -44,4 +44,4 @@ const Post = () => {
     }
 };
 
-export default Post;
+export default Comment
