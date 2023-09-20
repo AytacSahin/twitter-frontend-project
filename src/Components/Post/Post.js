@@ -10,10 +10,16 @@ const Post = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState();
 
+    const token = "Bearer " + localStorage.getItem("TOKEN")
+
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
         axios
-            .get("/tweet")
+            .get("/tweet", {
+                headers: {
+                    Authorization: token
+                }
+            })
             .then((res) => {
                 setIsLoaded(true);
                 setPostList(res.data);
@@ -29,14 +35,14 @@ const Post = () => {
     }, []);
 
     if (error) {
-        return <div className='w-[42rem]'>Hata Olustu.</div>
+        return <div className='w-[42rem] font-bold text-6xl flex justify-center text-center items-center'>Hata Olustu.</div>
     } else if (!isLoaded) {
         return (<div className='w-[42rem]'><Loading /></div>);
     } else {
         return (
             <div >
                 <ul className='w-[42rem]'>
-                    <CreatePost />
+                    <CreatePost refreshData={refreshData} />
                     <PostCard refreshData={refreshData} postList={postList} />
                 </ul>
             </div>

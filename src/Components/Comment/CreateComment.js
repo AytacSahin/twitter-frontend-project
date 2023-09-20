@@ -3,22 +3,33 @@ import React, { useState } from 'react'
 import CreateImageUrlPost from '../Post/CreateImageUrlPost';
 import Modal from 'react-modal';
 
-const CreateComment = ({refreshData, tweetId}) => {
+const CreateComment = ({ refreshData, tweetId }) => {
     const [newComment, setNewComment] = useState();
     const [imageLink, setImageLink] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const token = "Bearer " + localStorage.getItem("TOKEN")
+    const currentUserId = localStorage.getItem("CurrentUser");
 
-    const userIdDegistir = 1;
+    console.log("aaaaa", localStorage.getItem("profilePicture"))
+    console.log("aaaaa", JSON.parse(localStorage.getItem("profilePicture")))
+
 
     const sendComment = () => {
+
         axios.post('/comment', {
             text: newComment,
-            userId: userIdDegistir,
+            userId: currentUserId,
             tweetId: tweetId,
             imageUrl: imageLink
+        }, {
+            headers: {
+                Authorization: token
+            }
         })
             .then(function (response) {
                 refreshData();
+                setImageLink("");
+                setNewComment("");
             })
             .catch(function (error) {
                 console.log(error);
@@ -43,9 +54,19 @@ const CreateComment = ({refreshData, tweetId}) => {
         <div className='border-2 border-gray-200 border-opacity-50 pt-4 mt-2 bg-gray-100'>
 
             <div className="flex ">
+
+
+
+
+
                 <div className="m-2 w-10 py-1">
-                    <img className="inline-block h-10 w-10 rounded-full" src="https://aytac-sahin.vercel.app/static/media/headerImage.4719c4dbc590028a0a9f.png" alt="" />
+                    <img className="inline-block h-10 w-10 rounded-full" src={localStorage.getItem("profilePicture")} alt="" />
                 </div>
+
+
+
+
+
                 <div className="flex-1 px-2 pt-2 mt-2">
                     <textarea
                         value={newComment}

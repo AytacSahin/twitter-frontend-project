@@ -131,14 +131,14 @@ const Explorer = () => {
                     <div className="flex-1 ">
                         <div className="flex items-center w-48">
                             <div>
-                                <img className="inline-block h-10 w-auto rounded-full ml-4 mt-2" src="https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png" alt="" />
+                                <img className="inline-block h-10 w-auto rounded-full ml-4 mt-2" src="https://aytac-sahin.vercel.app/static/media/headerImage.4719c4dbc590028a0a9f.png" alt="" />
                             </div>
                             <div className="ml-3 mt-3">
                                 <p className="text-base leading-6 font-medium text-black">
-                                    Sonali Hirave
+                                    Aytac Sahin
                                 </p>
                                 <p className="text-sm leading-5 font-medium text-black group-hover:text-gray-300 transition ease-in-out duration-150">
-                                    @ShonaDesign
+                                    @aytacsah
                                 </p>
                             </div>
                         </div>
@@ -162,14 +162,14 @@ const Explorer = () => {
                         <div className="flex-1 ">
                             <div className="flex items-center w-48">
                                 <div>
-                                    <img className="inline-block h-10 w-auto rounded-full ml-4 mt-2" src="https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png" alt="" />
+                                    <img className="inline-block h-10 w-auto rounded-full ml-4 mt-2" src="https://aytac-sahin.vercel.app/static/media/headerImage.4719c4dbc590028a0a9f.png" alt="" />
                                 </div>
                                 <div className="ml-3 mt-3">
                                     <p className="text-base leading-6 font-medium text-black">
-                                        Sonali Hirave
+                                        Aytac Sahin
                                     </p>
                                     <p className="text-sm leading-5 font-medium text-black group-hover:text-gray-300 transition ease-in-out duration-150">
-                                        @ShonaDesign
+                                        @aytacsah
                                     </p>
                                 </div>
                             </div>

@@ -8,12 +8,16 @@ const Comment = ({ tweetId }) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState();
-
+    const token = "Bearer " + localStorage.getItem("TOKEN")
 
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
         axios
-            .get(`/comment?tweetId=${tweetId}`)
+            .get(`/comment?tweetId=${tweetId}`, {
+                headers: {
+                    Authorization: token
+                }
+            })
             .then((res) => {
                 setIsLoaded(true);
                 setPostList(res.data);

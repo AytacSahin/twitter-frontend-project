@@ -16,10 +16,16 @@ const PostCard = ({ postList, refreshData }) => {
                     <Link to={`/user/${post.userId}`}>
 
                         <div className="flex flex-shrink-0 p-4 pb-0">
-                            <a className="flex-shrink-0 group block">
+                            <div className="flex-shrink-0 group block">
                                 <div className="flex items-center">
                                     <div>
-                                        <img className="inline-block h-10 w-10 rounded-full" src={post.profilePicture} alt="" />
+                                        {post.profilePicture ? (
+                                            <img className="inline-block h-10 w-10 rounded-full" src={post.profilePicture} alt="" />
+                                        ) : (
+                                            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-400 text-white text-center text-2xl">
+                                                {post.userName.charAt(0).toUpperCase()}
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="ml-3">
                                         <p className="text-base leading-6 font-medium text-black">
@@ -30,7 +36,7 @@ const PostCard = ({ postList, refreshData }) => {
                                         </p>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
 
                     </Link>

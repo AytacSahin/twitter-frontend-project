@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CreateImageUrlPost from './CreateImageUrlPost';
 import Modal from 'react-modal';
 
@@ -8,23 +8,56 @@ const CreatePost = ({ refreshData }) => {
     const [newPost, setNewPost] = useState();
     const [imageLink, setImageLink] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [userImage, setUserImage] = useState("");
+    const [userNameU, setUserNameU] = useState("");
 
-    const userIdDegistir = 1;
+    const token = "Bearer " + localStorage.getItem("TOKEN")
+    const currentUserId = localStorage.getItem("CurrentUser");
 
 
     const sendTweet = () => {
+
         axios.post('/tweet', {
             text: newPost,
-            userId: userIdDegistir,
+            userId: currentUserId,
             imageUrl: imageLink
+        }, {
+            headers: {
+                Authorization: token
+            }
         })
-            .then(function (response) {
+            .then(function (res) {
+                setNewPost("");
+                setImageLink("");
                 refreshData();
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
+
+
+    const imageInst = () => {
+
+        axios.get(`/user/${currentUserId}`, {
+            headers: {
+                Authorization: token
+            }
+        })
+
+            .then((res) => {
+                setUserImage(res.data.profilePicture);
+                setUserNameU(res.data.userName);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        imageInst();
+    }, []);
+
 
     const handleImageUrl = () => {
         setIsModalOpen(true);
@@ -43,9 +76,22 @@ const CreatePost = ({ refreshData }) => {
         <div className='border-2 border-gray-200 border-opacity-50 pt-4 '>
 
             <div className="flex ">
-                <div className="m-2 w-10 py-1">
-                    <img className="inline-block h-10 w-10 rounded-full" src="https://aytac-sahin.vercel.app/static/media/headerImage.4719c4dbc590028a0a9f.png" alt="" />
-                </div>
+                {/* <div className="m-4 w-10 py-1">
+                    <img className="inline-block h-10 w-10 rounded-full" src={localStorage.getItem("profilePicture")} alt="" />
+                </div> */}
+
+                {userImage !== null && userImage ? (
+                    <img
+                        className="h-12 w-12 md ml-4 mt-4 rounded-full relative border-2 border-white"
+                        src={userImage}
+                        alt="profile picture"
+                    />) : (
+                    <div className="h-12 w-12 md ml-4 mt-4 rounded-full relative border-2 border-white bg-blue-400 text-white text-center text-2xl pt-2">
+                        {userNameU.charAt(0).toUpperCase()}
+                    </div>
+                )}
+
+
                 <div className="flex-1 px-2 pt-2 mt-2">
                     <textarea
                         value={newPost}

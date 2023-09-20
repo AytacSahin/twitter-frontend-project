@@ -4,13 +4,18 @@ import React, { useEffect, useState } from 'react'
 const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
 
     const [likesArr, setLikesArr] = useState([]);
-
+    const token = "Bearer " + localStorage.getItem("TOKEN")
     // TODO: LOGIN'DEN AL:
-    const userIdDegistir = 1;
+    const currentUserId = parseInt(localStorage.getItem("CurrentUser"));
 
     const getLikesArr = () => {
+
         axios
-            .get(`/like?userId=${userIdDegistir}`)
+            .get(`/like?userId=${currentUserId}`, {
+                headers: {
+                    Authorization: token
+                }
+            })
             .then((res) => {
                 setLikesArr(res.data);
             })
@@ -24,12 +29,12 @@ const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
     }, []);
 
     const isLike = (id) => {
-        let foundedLike = likesArr.find(like => like.userId === userIdDegistir && like.tweetId === id);
+        let foundedLike = likesArr.find(like => like.userId === currentUserId && like.tweetId === id);
         return foundedLike ? true : false;
     }
 
     const findLikeId = (userId, tweetId) => {
-        let foundedLikeId = likesArr.find(like => like.userId === userIdDegistir && like.tweetId === tweetId);
+        let foundedLikeId = likesArr.find(like => like.userId === currentUserId && like.tweetId === tweetId);
         return foundedLikeId.id;
     }
 
@@ -37,8 +42,12 @@ const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
         if (!isLike(tweetId)) {
             axios
                 .post("/like", {
-                    userId: userIdDegistir,
+                    userId: currentUserId,
                     tweetId: tweetId
+                }, {
+                    headers: {
+                        Authorization: token
+                    }
                 })
                 .then((res) => {
                     refreshData();
@@ -49,7 +58,11 @@ const PostFooterBar = ({ tweetId, likeCount, refreshData }) => {
                 });
         } else {
             axios
-                .delete(`/like/${findLikeId(userIdDegistir, tweetId)}`)
+                .delete(`/like/${findLikeId(currentUserId, tweetId)}`, {
+                    headers: {
+                        Authorization: token
+                    }
+                })
                 .then((res) => {
                     refreshData();
                     getLikesArr();

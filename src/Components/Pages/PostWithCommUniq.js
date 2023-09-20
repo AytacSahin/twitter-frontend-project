@@ -11,12 +11,16 @@ const PostWithCommUniq = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState([]);
+    const token = "Bearer " + localStorage.getItem("TOKEN")
 
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
-        console.log(id);
         axios
-            .get(`/tweet/${id}`)
+            .get(`/tweet/${id}`, {
+                headers: {
+                    Authorization: token
+                }
+            })
             .then((res) => {
                 setIsLoaded(true);
                 setPostList([res.data]);

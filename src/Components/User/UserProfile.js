@@ -8,6 +8,7 @@ import Loading from '../Pages/Loading';
 const UserProfile = () => {
 
     const { id } = useParams();
+    const token = "Bearer " + localStorage.getItem("TOKEN")
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -17,8 +18,16 @@ const UserProfile = () => {
     // TODO ileride tüm axios talepleri axiosWithAuth ile yapılacak.
     const refreshData = () => {
         Promise.all([
-            axios.get(`/tweet?userId=${id}`),
-            axios.get(`/user/${id}`)
+            axios.get(`/tweet?userId=${id}`, {
+                headers: {
+                    Authorization: token
+                }
+            }),
+            axios.get(`/user/${id}`, {
+                headers: {
+                    Authorization: token
+                }
+            })
         ])
             .then((responses) => {
                 const [postResponse, userResponse] = responses;
@@ -44,7 +53,7 @@ const UserProfile = () => {
         return (
             <div >
                 <ul className='w-[42rem]'>
-                    <UserDetails userInfo={userInfo} />
+                    <UserDetails userInfo={userInfo} postCount={postList.length}/>
                     <PostCard refreshData={refreshData} postList={postList} />
                 </ul>
             </div>
